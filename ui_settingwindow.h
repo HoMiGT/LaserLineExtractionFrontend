@@ -98,10 +98,13 @@ public:
     QLineEdit *lineEdit_y;
     QLabel *label_13;
     QLineEdit *lineEdit_sideLength;
+<<<<<<< HEAD
     QLabel *label_14;
     QHBoxLayout *horizontalLayout_12;
     QLineEdit *lineEdit_labelWidth;
     QLineEdit *lineEdit_labelHeight;
+=======
+>>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
     QHBoxLayout *horizontalLayout_3;
     QSpacerItem *horizontalSpacer;
     QPushButton *pushButton_ok;
@@ -514,6 +517,7 @@ public:
 
         formLayout->setWidget(3, QFormLayout::FieldRole, lineEdit_sideLength);
 
+<<<<<<< HEAD
         label_14 = new QLabel(widget_other);
         label_14->setObjectName("label_14");
 
@@ -538,6 +542,8 @@ public:
 
         formLayout->setLayout(4, QFormLayout::FieldRole, horizontalLayout_12);
 
+=======
+>>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
 
         verticalLayout_5->addLayout(formLayout);
 
@@ -659,7 +665,11 @@ public:
         label_2->setText(QCoreApplication::translate("SettingWindow", "GPU\345\271\266\350\241\214\346\225\260:", nullptr));
         groupBox_other->setTitle(QCoreApplication::translate("SettingWindow", "\346\217\220\345\217\226\351\205\215\347\275\256", nullptr));
         label->setText(QCoreApplication::translate("SettingWindow", "\351\205\215\347\275\256\345\220\215\347\247\260:", nullptr));
+<<<<<<< HEAD
         label_4->setText(QCoreApplication::translate("SettingWindow", "\351\225\255\345\260\204\345\214\272\345\237\237\345\256\275\351\253\230:", nullptr));
+=======
+        label_4->setText(QCoreApplication::translate("SettingWindow", "\346\217\220\345\217\226\345\256\275\351\253\230:", nullptr));
+>>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
         lineEdit_width->setPlaceholderText(QCoreApplication::translate("SettingWindow", "\345\256\275", nullptr));
         lineEdit_height->setPlaceholderText(QCoreApplication::translate("SettingWindow", "\351\253\230", nullptr));
         label_9->setText(QCoreApplication::translate("SettingWindow", "\344\272\214\347\273\264\347\240\201\345\267\246\344\270\212\350\247\222\345\235\220\346\240\207:", nullptr));
@@ -667,9 +677,12 @@ public:
         lineEdit_y->setPlaceholderText(QCoreApplication::translate("SettingWindow", "Y\345\235\220\346\240\207", nullptr));
         label_13->setText(QCoreApplication::translate("SettingWindow", "\344\272\214\347\273\264\347\240\201\350\276\271\351\225\277:", nullptr));
         lineEdit_sideLength->setPlaceholderText(QCoreApplication::translate("SettingWindow", "\344\272\214\347\273\264\347\240\201\350\276\271\351\225\277", nullptr));
+<<<<<<< HEAD
         label_14->setText(QCoreApplication::translate("SettingWindow", "\346\225\264\344\270\252\346\240\207\347\255\276\345\256\275\351\253\230:", nullptr));
         lineEdit_labelWidth->setPlaceholderText(QCoreApplication::translate("SettingWindow", "\345\256\275", nullptr));
         lineEdit_labelHeight->setPlaceholderText(QCoreApplication::translate("SettingWindow", "\351\253\230", nullptr));
+=======
+>>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
         pushButton_ok->setText(QCoreApplication::translate("SettingWindow", "\347\241\256\345\256\232", nullptr));
         pushButton_clear->setText(QCoreApplication::translate("SettingWindow", "\346\270\205\351\231\244", nullptr));
         pushButton_noOk->setText(QCoreApplication::translate("SettingWindow", "\345\217\226\346\266\210", nullptr));

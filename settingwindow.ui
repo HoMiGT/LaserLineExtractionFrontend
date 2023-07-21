@@ -675,7 +675,11 @@
                     <item row="1" column="0">
                      <widget class="QLabel" name="label_4">
                       <property name="text">
+<<<<<<< HEAD
                        <string>镭射区域宽高:</string>
+=======
+                       <string>提取宽高:</string>
+>>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
                       </property>
                      </widget>
                     </item>
@@ -796,6 +800,7 @@
                       </property>
                      </widget>
                     </item>
+<<<<<<< HEAD
                     <item row="4" column="0">
                      <widget class="QLabel" name="label_14">
                       <property name="text">
@@ -845,6 +850,8 @@
                       </item>
                      </layout>
                     </item>
+=======
+>>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
                    </layout>
                   </item>
                  </layout>
