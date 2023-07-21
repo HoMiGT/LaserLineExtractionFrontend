@@ -98,15 +98,13 @@ public:
     QLineEdit *lineEdit_y;
     QLabel *label_13;
     QLineEdit *lineEdit_sideLength;
-<<<<<<< HEAD
     QLabel *label_14;
     QHBoxLayout *horizontalLayout_12;
     QLineEdit *lineEdit_labelWidth;
     QLineEdit *lineEdit_labelHeight;
-=======
->>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
     QHBoxLayout *horizontalLayout_3;
     QSpacerItem *horizontalSpacer;
+    QPushButton *pushButton_add;
     QPushButton *pushButton_ok;
     QPushButton *pushButton_clear;
     QPushButton *pushButton_noOk;
@@ -517,7 +515,6 @@ public:
 
         formLayout->setWidget(3, QFormLayout::FieldRole, lineEdit_sideLength);
 
-<<<<<<< HEAD
         label_14 = new QLabel(widget_other);
         label_14->setObjectName("label_14");
 
@@ -542,8 +539,6 @@ public:
 
         formLayout->setLayout(4, QFormLayout::FieldRole, horizontalLayout_12);
 
-=======
->>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
 
         verticalLayout_5->addLayout(formLayout);
 
@@ -568,15 +563,25 @@ public:
 
         horizontalLayout_3->addItem(horizontalSpacer);
 
+        pushButton_add = new QPushButton(centralwidget);
+        pushButton_add->setObjectName("pushButton_add");
+        pushButton_add->setMinimumSize(QSize(80, 40));
+        pushButton_add->setMaximumSize(QSize(80, 40));
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8(":/Icon/add_task.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButton_add->setIcon(icon2);
+
+        horizontalLayout_3->addWidget(pushButton_add);
+
         pushButton_ok = new QPushButton(centralwidget);
         pushButton_ok->setObjectName("pushButton_ok");
         sizePolicy1.setHeightForWidth(pushButton_ok->sizePolicy().hasHeightForWidth());
         pushButton_ok->setSizePolicy(sizePolicy1);
         pushButton_ok->setMinimumSize(QSize(80, 40));
         pushButton_ok->setMaximumSize(QSize(80, 40));
-        QIcon icon2;
-        icon2.addFile(QString::fromUtf8(":/Icon/ok.svg"), QSize(), QIcon::Normal, QIcon::Off);
-        pushButton_ok->setIcon(icon2);
+        QIcon icon3;
+        icon3.addFile(QString::fromUtf8(":/Icon/ok.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButton_ok->setIcon(icon3);
         pushButton_ok->setIconSize(QSize(20, 20));
 
         horizontalLayout_3->addWidget(pushButton_ok);
@@ -587,9 +592,9 @@ public:
         pushButton_clear->setSizePolicy(sizePolicy1);
         pushButton_clear->setMinimumSize(QSize(80, 40));
         pushButton_clear->setMaximumSize(QSize(80, 40));
-        QIcon icon3;
-        icon3.addFile(QString::fromUtf8(":/Icon/clear_task.svg"), QSize(), QIcon::Normal, QIcon::Off);
-        pushButton_clear->setIcon(icon3);
+        QIcon icon4;
+        icon4.addFile(QString::fromUtf8(":/Icon/clear_task.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButton_clear->setIcon(icon4);
         pushButton_clear->setIconSize(QSize(20, 20));
 
         horizontalLayout_3->addWidget(pushButton_clear);
@@ -600,9 +605,9 @@ public:
         pushButton_noOk->setSizePolicy(sizePolicy1);
         pushButton_noOk->setMinimumSize(QSize(80, 40));
         pushButton_noOk->setMaximumSize(QSize(80, 40));
-        QIcon icon4;
-        icon4.addFile(QString::fromUtf8(":/Icon/no_ok.svg"), QSize(), QIcon::Normal, QIcon::Off);
-        pushButton_noOk->setIcon(icon4);
+        QIcon icon5;
+        icon5.addFile(QString::fromUtf8(":/Icon/no_ok.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButton_noOk->setIcon(icon5);
         pushButton_noOk->setIconSize(QSize(20, 20));
 
         horizontalLayout_3->addWidget(pushButton_noOk);
@@ -612,9 +617,9 @@ public:
         horizontalLayout_3->addItem(horizontalSpacer_2);
 
         horizontalLayout_3->setStretch(0, 3);
-        horizontalLayout_3->setStretch(1, 1);
         horizontalLayout_3->setStretch(2, 1);
         horizontalLayout_3->setStretch(3, 1);
+        horizontalLayout_3->setStretch(4, 1);
 
         verticalLayout_2->addLayout(horizontalLayout_3);
 
@@ -665,11 +670,7 @@ public:
         label_2->setText(QCoreApplication::translate("SettingWindow", "GPU\345\271\266\350\241\214\346\225\260:", nullptr));
         groupBox_other->setTitle(QCoreApplication::translate("SettingWindow", "\346\217\220\345\217\226\351\205\215\347\275\256", nullptr));
         label->setText(QCoreApplication::translate("SettingWindow", "\351\205\215\347\275\256\345\220\215\347\247\260:", nullptr));
-<<<<<<< HEAD
         label_4->setText(QCoreApplication::translate("SettingWindow", "\351\225\255\345\260\204\345\214\272\345\237\237\345\256\275\351\253\230:", nullptr));
-=======
-        label_4->setText(QCoreApplication::translate("SettingWindow", "\346\217\220\345\217\226\345\256\275\351\253\230:", nullptr));
->>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
         lineEdit_width->setPlaceholderText(QCoreApplication::translate("SettingWindow", "\345\256\275", nullptr));
         lineEdit_height->setPlaceholderText(QCoreApplication::translate("SettingWindow", "\351\253\230", nullptr));
         label_9->setText(QCoreApplication::translate("SettingWindow", "\344\272\214\347\273\264\347\240\201\345\267\246\344\270\212\350\247\222\345\235\220\346\240\207:", nullptr));
@@ -677,12 +678,10 @@ public:
         lineEdit_y->setPlaceholderText(QCoreApplication::translate("SettingWindow", "Y\345\235\220\346\240\207", nullptr));
         label_13->setText(QCoreApplication::translate("SettingWindow", "\344\272\214\347\273\264\347\240\201\350\276\271\351\225\277:", nullptr));
         lineEdit_sideLength->setPlaceholderText(QCoreApplication::translate("SettingWindow", "\344\272\214\347\273\264\347\240\201\350\276\271\351\225\277", nullptr));
-<<<<<<< HEAD
         label_14->setText(QCoreApplication::translate("SettingWindow", "\346\225\264\344\270\252\346\240\207\347\255\276\345\256\275\351\253\230:", nullptr));
         lineEdit_labelWidth->setPlaceholderText(QCoreApplication::translate("SettingWindow", "\345\256\275", nullptr));
         lineEdit_labelHeight->setPlaceholderText(QCoreApplication::translate("SettingWindow", "\351\253\230", nullptr));
-=======
->>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
+        pushButton_add->setText(QCoreApplication::translate("SettingWindow", "\346\267\273\345\212\240", nullptr));
         pushButton_ok->setText(QCoreApplication::translate("SettingWindow", "\347\241\256\345\256\232", nullptr));
         pushButton_clear->setText(QCoreApplication::translate("SettingWindow", "\346\270\205\351\231\244", nullptr));
         pushButton_noOk->setText(QCoreApplication::translate("SettingWindow", "\345\217\226\346\266\210", nullptr));

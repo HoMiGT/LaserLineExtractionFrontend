@@ -158,11 +158,8 @@ void MainWindow::dailogAddTask(QPair<QString, QString> msg)
 	double extractX = customeJsonObj.value("extract_x").toDouble(); // 提取x
 	double extractY = customeJsonObj.value("extract_y").toDouble(); // 提取y
 	int qrSideLength = customeJsonObj.value("extract_sideLength").toInt(); // 二维码边长
-<<<<<<< HEAD
 	double labelWidth = customeJsonObj.value("label_width").toDouble(); // 标签宽
 	double labelHeight = customeJsonObj.value("label_height").toDouble(); // 标签高
-=======
->>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
 
 
 	auto ti = std::make_shared<TaskInfo>();
@@ -184,11 +181,8 @@ void MainWindow::dailogAddTask(QPair<QString, QString> msg)
 	ti->extractX = extractX;
 	ti->extractY = extractY;
 	ti->qrSideLength = qrSideLength;
-<<<<<<< HEAD
 	ti->labelWidth = labelWidth;
 	ti->labelHeight = labelHeight;
-=======
->>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
 
     m_taskMap.insert(msg.first + "_" + timestamp, ti);
 
@@ -302,11 +296,8 @@ bool MainWindow::multiRunTask(std::shared_ptr<TaskInfo>& task_info)
 			info["extract_x"] = task_info->extractX;
 			info["extract_y"] = task_info->extractY;
 			info["qr_side_length"] = task_info->qrSideLength;
-<<<<<<< HEAD
 			info["label_width"] = task_info->labelWidth;
 			info["label_height"] = task_info->labelHeight;
-=======
->>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
 
 			std::unique_ptr<QJsonObject> info_ptr = std::make_unique<QJsonObject>(info);
             ExcutePythonScript* task = new ExcutePythonScript(task_info->pythonExePath, task_info->pythonScriptPath, std::move(info_ptr));

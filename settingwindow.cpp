@@ -27,11 +27,8 @@ SettingWindow::SettingWindow(QWidget *parent) :
     m_ui->lineEdit_x->setValidator(m_doubleValidator);
     m_ui->lineEdit_y->setValidator(m_doubleValidator);
     m_ui->lineEdit_sideLength->setValidator(m_intValidator);
-<<<<<<< HEAD
     m_ui->lineEdit_labelWidth->setValidator(m_doubleValidator);
     m_ui->lineEdit_labelHeight->setValidator(m_doubleValidator);
-=======
->>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
 
     m_ui->lineEdit_parallelCount->setValidator(m_intValidator);
 
@@ -73,6 +70,19 @@ void SettingWindow::on_pushButton_noOk_clicked()
     this->close();
 }
 
+void SettingWindow::on_pushButton_add_clicked()
+{
+	this->m_ui->stackedWidget->setCurrentIndex(1);
+    this->m_ui->lineEdit_settingName->clear();
+    this->m_ui->lineEdit_width->clear();
+    this->m_ui->lineEdit_height->clear();
+    this->m_ui->lineEdit_x->clear();
+    this->m_ui->lineEdit_y->clear();
+    this->m_ui->lineEdit_sideLength->clear();
+    this->m_ui->lineEdit_labelWidth->clear();
+    this->m_ui->lineEdit_labelHeight->clear();
+}
+
 
 void SettingWindow::on_pushButton_clear_clicked()
 {
@@ -84,11 +94,8 @@ void SettingWindow::on_pushButton_clear_clicked()
         this->m_ui->lineEdit_x->clear();
         this->m_ui->lineEdit_y->clear();
         this->m_ui->lineEdit_sideLength->clear();
-<<<<<<< HEAD
         this->m_ui->lineEdit_labelWidth->clear();
         this->m_ui->lineEdit_labelHeight->clear();
-=======
->>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
     }else if(index==0){
         if(QMessageBox::question(this,"清除基础配置警告","请确认是否要清除基础配置！！！") == QMessageBox::StandardButton::Yes){
             this->m_ui->lineEdit_extractFile->clear();
@@ -172,11 +179,8 @@ void SettingWindow::on_listView_settings_doubleClicked(const QModelIndex &index)
         this->m_ui->lineEdit_x->setText(QString::number(json.value("extract_x").toDouble()));
         this->m_ui->lineEdit_y->setText(QString::number(json.value("extract_y").toDouble()));
         this->m_ui->lineEdit_sideLength->setText(QString::number(json.value("extract_sideLength").toInt()));
-<<<<<<< HEAD
         this->m_ui->lineEdit_labelWidth->setText(QString::number(json.value("label_width").toDouble()));
         this->m_ui->lineEdit_labelHeight->setText(QString::number(json.value("label_height").toDouble()));
-=======
->>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
     }
 }
 
@@ -199,11 +203,8 @@ void SettingWindow::on_pushButton_ok_clicked()
         QString extract_x_str = this->m_ui->lineEdit_x->text(); // x
         QString extract_y_str = this->m_ui->lineEdit_y->text(); // y
         QString extract_sideLength_str = this->m_ui->lineEdit_sideLength->text(); // 边长
-<<<<<<< HEAD
         QString label_width_str = this->m_ui->lineEdit_labelWidth->text(); // 标签宽
         QString label_height_str = this->m_ui->lineEdit_labelHeight->text(); // 标签高
-=======
->>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
 
         if (setting_name.isEmpty() || extract_width_str.isEmpty() || extract_height_str.isEmpty()){
             QMessageBox::information(this,"提示","配置名称、二维码边长或提取宽高不允许为空");
@@ -215,11 +216,8 @@ void SettingWindow::on_pushButton_ok_clicked()
         double extract_x = extract_x_str.toDouble();
         double extract_y = extract_y_str.toDouble();
         int extract_sideLength = extract_sideLength_str.toInt();
-<<<<<<< HEAD
         double label_width = label_width_str.toDouble();
         double label_height = label_height_str.toDouble();
-=======
->>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
 
         QJsonObject jsonObj;
         jsonObj["setting_name"] = setting_name;
@@ -228,11 +226,8 @@ void SettingWindow::on_pushButton_ok_clicked()
         jsonObj["extract_x"] = extract_x;
         jsonObj["extract_y"] = extract_y;
         jsonObj["extract_sideLength"] = extract_sideLength;
-<<<<<<< HEAD
         jsonObj["label_width"] = label_width;
         jsonObj["label_height"] = label_height;
-=======
->>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
 
         fs::path setting_file_path = fs::current_path();
         setting_file_path.append("settings");
@@ -366,14 +361,11 @@ void SettingWindow::deleteItem()
     this->m_ui->lineEdit_settingName->clear();
     this->m_ui->lineEdit_width->clear();
     this->m_ui->lineEdit_height->clear();
-<<<<<<< HEAD
     this->m_ui->lineEdit_x->clear();
     this->m_ui->lineEdit_y->clear();
     this->m_ui->lineEdit_sideLength->clear();
     this->m_ui->lineEdit_labelWidth->clear();
     this->m_ui->lineEdit_labelHeight->clear();
-=======
->>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
 
     QMessageBox::information(this,"提示","删除文件成功");
 

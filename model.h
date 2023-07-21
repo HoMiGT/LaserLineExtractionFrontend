@@ -69,12 +69,8 @@ struct TaskInfo{
     double extractX; // 二维码x坐标
     double extractY; // 二维码y坐标
     int qrSideLength; // 二维码边长
-<<<<<<< HEAD
     double labelWidth;  // 二维码宽
     double labelHeight;  // 二维码高
-=======
-
->>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
 };
 
 // 任务运行结构体

@@ -26,6 +26,8 @@ signals:
 private slots:
     void on_pushButton_noOk_clicked();
 
+    void on_pushButton_add_clicked();
+
     void on_pushButton_clear_clicked();
 
     void on_pushButton_dir_seedPath_clicked();

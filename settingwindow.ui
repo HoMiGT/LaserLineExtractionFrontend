@@ -675,11 +675,7 @@
                     <item row="1" column="0">
                      <widget class="QLabel" name="label_4">
                       <property name="text">
-<<<<<<< HEAD
                        <string>镭射区域宽高:</string>
-=======
-                       <string>提取宽高:</string>
->>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
                       </property>
                      </widget>
                     </item>
@@ -800,7 +796,6 @@
                       </property>
                      </widget>
                     </item>
-<<<<<<< HEAD
                     <item row="4" column="0">
                      <widget class="QLabel" name="label_14">
                       <property name="text">
@@ -850,8 +845,6 @@
                       </item>
                      </layout>
                     </item>
-=======
->>>>>>> 6a00e592837ec525f39377f79a9c2dce39f2283a
                    </layout>
                   </item>
                  </layout>
@@ -867,7 +860,7 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="3,1,1,1,0">
+       <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="3,0,1,1,1,0">
         <item>
          <spacer name="horizontalSpacer">
           <property name="orientation">
@@ -880,6 +873,29 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_add">
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>80</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>添加</string>
+          </property>
+          <property name="icon">
+           <iconset resource="icon.qrc">
+            <normaloff>:/Icon/add_task.svg</normaloff>:/Icon/add_task.svg</iconset>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_ok">
