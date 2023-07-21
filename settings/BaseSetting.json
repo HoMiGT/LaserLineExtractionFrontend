@@ -1,0 +1,11 @@
+{
+    "ding_ding_url": "https://oapi.dingtalk.com/robot/send?access_token=77165aab1bf4c8960e6183c00cdf323f193b3eec4749d48988bcb365b0962a2c",
+    "extract_path": "E:/Projects/test_extractImage",
+    "failed_image_path": "E:/Projects/test_failedImage",
+    "is_ding_notice": true,
+    "is_upload_server": true,
+    "parallel_count": 1,
+    "python_exe_path": "D:/Softwares/Anaconda3/envs/py38/python.exe",
+    "python_script_path": "E:/Projects/yolov5_7/mainFindSeed.py",
+    "upload_save_path": "E:/Projects/test_uploadSeed"
+}

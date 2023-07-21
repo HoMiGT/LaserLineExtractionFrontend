@@ -1,0 +1,1 @@
+{'config': {'extract_height': 13, 'extract_path': 'E:/Projects/test_extractImage', 'extract_width': 20, 'failed_image_path': 'E:/Projects/test_failedImage/weichaixiao_230228173713', 'image_names': ['camera_150742298.bmp'], 'save_seed_path': 'E:/Projects/test_uploadSeed/weichaixiao_230228173713'}}

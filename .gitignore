@@ -1,0 +1,7 @@
+.vs
+.dist
+.qtc_clangd
+.vscode
+debug
+release
+.qmake.stash
