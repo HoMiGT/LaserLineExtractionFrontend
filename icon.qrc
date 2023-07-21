@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Icon/add_task.svg</file>
+        <file>Icon/clear_task.svg</file>
+        <file>Icon/start_no.svg</file>
+        <file>Icon/starting.svg</file>
+        <file>Icon/menu_file.svg</file>
+        <file>Icon/menu_help.svg</file>
+        <file>Icon/action_setting.svg</file>
+        <file>Icon/exit.svg</file>
+        <file>Icon/search.svg</file>
+        <file>Icon/no_ok.svg</file>
+        <file>Icon/ok.svg</file>
+        <file>Icon/preview.svg</file>
+        <file>Icon/stop.svg</file>
+    </qresource>
+</RCC>
