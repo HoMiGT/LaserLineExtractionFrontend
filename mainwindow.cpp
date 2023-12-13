@@ -136,8 +136,10 @@ void MainWindow::dailogAddTask(QPair<QString, QString> msg)
 	auto taskNamePy = setting_name_py + "_" + timestamp;
 	auto extractImagePath = msg.second;
 
-	auto savedSeedPath = m_jsonObj->value("upload_save_path").toString() + "/" + taskNamePy;  // 保存种子路径
-	auto failedImagePath = m_jsonObj->value("failed_image_path").toString() + "/" + taskNamePy; // 保存失败图片路径
+	auto datestamp = QDateTime::currentDateTime().toString("yyyyMMdd");
+
+	auto savedSeedPath = m_jsonObj->value("upload_save_path").toString() + "/" + datestamp + "/" + taskNamePy;  // 保存种子路径
+	auto failedImagePath = m_jsonObj->value("failed_image_path").toString() + "/" + datestamp + "/" + taskNamePy; // 保存失败图片路径
 	auto isDingNotic = m_jsonObj->value("is_ding_notice").toBool();  // 是否钉钉通知
 	auto dingDingUrl = m_jsonObj->value("ding_ding_url").toString();  // 钉钉通知url
 	auto isUploadServer = m_jsonObj->value("is_upload_server").toBool(); // 是否上传服务器
