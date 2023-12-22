@@ -165,6 +165,7 @@ void MainWindow::dailogAddTask(QPair<QString, QString> msg)
 
 
 	auto ti = std::make_shared<TaskInfo>();
+	ti->configName = msg.first;
 	ti->taskName = taskName;
 	ti->extractImagePath = extractImagePath;
 	ti->savedSeedPath = savedSeedPath;
@@ -291,6 +292,7 @@ bool MainWindow::multiRunTask(std::shared_ptr<TaskInfo>& task_info)
 				jsonArray.append(value);
 			}
 			QJsonObject info;
+			info["config_name"] = task_info->configName;
 			info["extract_path"] = task_info->extractImagePath;
 			info["save_seed_path"] = task_info->savedSeedPath;
 			info["failed_image_path"] = task_info->failedImagePath;
