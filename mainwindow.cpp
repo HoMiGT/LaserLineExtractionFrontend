@@ -271,32 +271,18 @@ bool MainWindow::multiRunTask(std::shared_ptr<TaskInfo>& task_info)
 		// 1. 将提取路径下得图片 存入到 QStringList中
 		QStringList files;
 		auto extractPath = fs::path(task_info->extractImagePath.toStdString());
-		getExtractImageName(files, extractPath);
+		getExtractImageName(files, extractPath, task_info->taskName, m_cpuCount);
 		// 2. 根据核数将任务拆分
-		QVector<QStringList> distribute_imgs(m_cpuCount);
-
-		int index = 0;
-		for (auto& item : files) {
-			int orderNumber = index % m_cpuCount;
-			distribute_imgs[orderNumber].emplace_back(item);
-			index++;
-		}
-
 		// 3. 多线程处理 调用QProcess来执行脚本
-		for (auto& imgs : distribute_imgs) {
-			if (imgs.isEmpty()) { continue; }
+		for (auto& img_file : files) {
+			if (img_file.isEmpty()) { continue; }
 
-			QJsonArray jsonArray;
-			for (auto& item : imgs) {
-				QJsonValue value(item);
-				jsonArray.append(value);
-			}
 			QJsonObject info;
 			info["config_name"] = task_info->configName;
 			info["extract_path"] = task_info->extractImagePath;
 			info["save_seed_path"] = task_info->savedSeedPath;
 			info["failed_image_path"] = task_info->failedImagePath;
-			info["image_names"] = jsonArray;
+			info["image_names"] = img_file;
 			info["extract_width"] = task_info->extractWidth;
 			info["extract_height"] = task_info->extractHeight;
 			info["extract_x"] = task_info->extractX;
@@ -312,6 +298,13 @@ bool MainWindow::multiRunTask(std::shared_ptr<TaskInfo>& task_info)
 
 		// 4. 等待所有任务完成，更新状态，以及完成文件夹名修改
 		m_threadPool.waitForDone(); // 等待所有任务完成
+
+		for (auto& img_file : files) {
+			QFile file(img_file);
+			if (file.exists()) {
+				file.remove();
+			}
+		}
 		return true;
 	}
 	catch (std::exception& e) {
@@ -467,6 +460,7 @@ void ExcutePythonScript::run()
 	// 启动python脚本并传递参数
 	QProcess process;
 	QStringList args = { m_script,"-config",QString::fromUtf8(jsonByteArray) };
+	logToFile(m_script + " -config " + QString::fromUtf8(jsonByteArray));
 	process.start(m_exe, args);
 	process.waitForFinished(-1);
 
