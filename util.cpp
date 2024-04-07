@@ -224,3 +224,21 @@ void logToFile(const QString& message) {
 		// 处理文件打开失败的情况
 	}
 }
+
+void clear_folder() {
+	fs::path customeCsv = fs::current_path();
+	customeCsv.append("csvs");
+	const QString& folderPath = QString::fromStdString(customeCsv.string());
+	QDir folder(folderPath);
+	if (!folder.exists()) {
+		qDebug() << "文件夹不存在";
+		return;
+	}
+
+	folder.setFilter(QDir::Files | QDir::NoDotAndDotDot);
+	for (const QFileInfo& fileInfo : folder.entryInfoList()) {
+		if (!folder.remove(fileInfo.absoluteFilePath())) {
+			qDebug() << "无法删除文件" << fileInfo.absoluteFilePath();
+		}
+	}
+}

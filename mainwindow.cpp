@@ -365,6 +365,7 @@ void MainWindow::on_tableView_taskList_doubleClicked(const QModelIndex& index)
 // 清理列表
 void MainWindow::on_action_clearList_triggered()
 {
+	clear_folder();
 	int runing_task_count = 0;
 	QStringList remove_keys;
 	for (auto it = m_taskMap.begin(); it != m_taskMap.end(); it++) {
@@ -421,7 +422,7 @@ void MainWindow::on_action_clearList_triggered()
 void MainWindow::on_action_startTask_triggered()
 {
 	if (m_taskMap.empty()) { return; }
-
+	clear_folder();
 	if (m_startActionState == StartActionColor::GREEN) {
 		// 修改action状态 -> 红色
 		m_ui->action_startTask->setIcon(QIcon(":/Icon/stop.svg"));

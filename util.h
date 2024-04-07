@@ -27,5 +27,7 @@ int check_config();
 
 void logToFile(const QString& message);
 
+void clear_folder();
+
 
 
