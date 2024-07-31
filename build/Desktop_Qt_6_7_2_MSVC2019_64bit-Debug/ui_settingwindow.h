@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'settingwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 6.4.1
+** Created by: Qt User Interface Compiler version 6.7.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -102,6 +102,8 @@ public:
     QHBoxLayout *horizontalLayout_12;
     QLineEdit *lineEdit_labelWidth;
     QLineEdit *lineEdit_labelHeight;
+    QLabel *label_15;
+    QLineEdit *lineEdit_blockNum;
     QHBoxLayout *horizontalLayout_3;
     QSpacerItem *horizontalSpacer;
     QPushButton *pushButton_add;
@@ -121,11 +123,11 @@ public:
         font.setPointSize(12);
         SettingWindow->setFont(font);
         QIcon icon;
-        icon.addFile(QString::fromUtf8(":/Icon/action_setting.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/Icon/action_setting.svg"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         SettingWindow->setWindowIcon(icon);
         centralwidget = new QWidget(SettingWindow);
         centralwidget->setObjectName("centralwidget");
-        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        QSizePolicy sizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(centralwidget->sizePolicy().hasHeightForWidth());
@@ -153,7 +155,7 @@ public:
 
         pushButton_search = new QPushButton(centralwidget);
         pushButton_search->setObjectName("pushButton_search");
-        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        QSizePolicy sizePolicy1(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(pushButton_search->sizePolicy().hasHeightForWidth());
@@ -161,7 +163,7 @@ public:
         pushButton_search->setMinimumSize(QSize(80, 40));
         pushButton_search->setMaximumSize(QSize(80, 40));
         QIcon icon1;
-        icon1.addFile(QString::fromUtf8(":/Icon/search.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QString::fromUtf8(":/Icon/search.svg"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         pushButton_search->setIcon(icon1);
         pushButton_search->setIconSize(QSize(20, 20));
 
@@ -236,7 +238,7 @@ public:
 
         label_5 = new QLabel(widget_base);
         label_5->setObjectName("label_5");
-        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        QSizePolicy sizePolicy2(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Preferred);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
         sizePolicy2.setHeightForWidth(label_5->sizePolicy().hasHeightForWidth());
@@ -249,7 +251,7 @@ public:
         horizontalLayout_7->setSizeConstraint(QLayout::SetDefaultConstraint);
         lineEdit_seedSavePath = new QLineEdit(widget_base);
         lineEdit_seedSavePath->setObjectName("lineEdit_seedSavePath");
-        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        QSizePolicy sizePolicy3(QSizePolicy::Policy::Preferred, QSizePolicy::Policy::Fixed);
         sizePolicy3.setHorizontalStretch(0);
         sizePolicy3.setVerticalStretch(0);
         sizePolicy3.setHeightForWidth(lineEdit_seedSavePath->sizePolicy().hasHeightForWidth());
@@ -410,7 +412,7 @@ public:
 
         verticalLayout_9->addLayout(formLayout_3);
 
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         verticalLayout_9->addItem(verticalSpacer);
 
@@ -539,6 +541,17 @@ public:
 
         formLayout->setLayout(4, QFormLayout::FieldRole, horizontalLayout_12);
 
+        label_15 = new QLabel(widget_other);
+        label_15->setObjectName("label_15");
+
+        formLayout->setWidget(5, QFormLayout::LabelRole, label_15);
+
+        lineEdit_blockNum = new QLineEdit(widget_other);
+        lineEdit_blockNum->setObjectName("lineEdit_blockNum");
+        lineEdit_blockNum->setMinimumSize(QSize(0, 40));
+
+        formLayout->setWidget(5, QFormLayout::FieldRole, lineEdit_blockNum);
+
 
         verticalLayout_5->addLayout(formLayout);
 
@@ -559,7 +572,7 @@ public:
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName("horizontalLayout_3");
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
         horizontalLayout_3->addItem(horizontalSpacer);
 
@@ -568,7 +581,7 @@ public:
         pushButton_add->setMinimumSize(QSize(80, 40));
         pushButton_add->setMaximumSize(QSize(80, 40));
         QIcon icon2;
-        icon2.addFile(QString::fromUtf8(":/Icon/add_task.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QString::fromUtf8(":/Icon/add_task.svg"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         pushButton_add->setIcon(icon2);
 
         horizontalLayout_3->addWidget(pushButton_add);
@@ -580,7 +593,7 @@ public:
         pushButton_ok->setMinimumSize(QSize(80, 40));
         pushButton_ok->setMaximumSize(QSize(80, 40));
         QIcon icon3;
-        icon3.addFile(QString::fromUtf8(":/Icon/ok.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon3.addFile(QString::fromUtf8(":/Icon/ok.svg"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         pushButton_ok->setIcon(icon3);
         pushButton_ok->setIconSize(QSize(20, 20));
 
@@ -593,7 +606,7 @@ public:
         pushButton_clear->setMinimumSize(QSize(80, 40));
         pushButton_clear->setMaximumSize(QSize(80, 40));
         QIcon icon4;
-        icon4.addFile(QString::fromUtf8(":/Icon/clear_task.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon4.addFile(QString::fromUtf8(":/Icon/clear_task.svg"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         pushButton_clear->setIcon(icon4);
         pushButton_clear->setIconSize(QSize(20, 20));
 
@@ -606,13 +619,13 @@ public:
         pushButton_noOk->setMinimumSize(QSize(80, 40));
         pushButton_noOk->setMaximumSize(QSize(80, 40));
         QIcon icon5;
-        icon5.addFile(QString::fromUtf8(":/Icon/no_ok.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon5.addFile(QString::fromUtf8(":/Icon/no_ok.svg"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         pushButton_noOk->setIcon(icon5);
         pushButton_noOk->setIconSize(QSize(20, 20));
 
         horizontalLayout_3->addWidget(pushButton_noOk);
 
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
         horizontalLayout_3->addItem(horizontalSpacer_2);
 
@@ -629,7 +642,7 @@ public:
         SettingWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(SettingWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1144, 27));
+        menubar->setGeometry(QRect(0, 0, 1144, 26));
         SettingWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(SettingWindow);
         statusbar->setObjectName("statusbar");
@@ -681,6 +694,8 @@ public:
         label_14->setText(QCoreApplication::translate("SettingWindow", "\346\225\264\344\270\252\346\240\207\347\255\276\345\256\275\351\253\230:", nullptr));
         lineEdit_labelWidth->setPlaceholderText(QCoreApplication::translate("SettingWindow", "\345\256\275", nullptr));
         lineEdit_labelHeight->setPlaceholderText(QCoreApplication::translate("SettingWindow", "\351\253\230", nullptr));
+        label_15->setText(QCoreApplication::translate("SettingWindow", "\347\262\211\345\235\227\346\225\260\351\207\217:", nullptr));
+        lineEdit_blockNum->setPlaceholderText(QCoreApplication::translate("SettingWindow", "10", nullptr));
         pushButton_add->setText(QCoreApplication::translate("SettingWindow", "\346\267\273\345\212\240", nullptr));
         pushButton_ok->setText(QCoreApplication::translate("SettingWindow", "\347\241\256\345\256\232", nullptr));
         pushButton_clear->setText(QCoreApplication::translate("SettingWindow", "\346\270\205\351\231\244", nullptr));

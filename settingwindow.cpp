@@ -29,8 +29,8 @@ SettingWindow::SettingWindow(QWidget *parent) :
     m_ui->lineEdit_sideLength->setValidator(m_intValidator);
     m_ui->lineEdit_labelWidth->setValidator(m_doubleValidator);
     m_ui->lineEdit_labelHeight->setValidator(m_doubleValidator);
-
     m_ui->lineEdit_parallelCount->setValidator(m_intValidator);
+    m_ui->lineEdit_blockNum->setValidator(m_intValidator);
 
 
     traverseDirectory(this->m_settingFiles);
@@ -81,6 +81,7 @@ void SettingWindow::on_pushButton_add_clicked()
     this->m_ui->lineEdit_sideLength->clear();
     this->m_ui->lineEdit_labelWidth->clear();
     this->m_ui->lineEdit_labelHeight->clear();
+    this->m_ui->lineEdit_blockNum->clear();
 }
 
 
@@ -96,6 +97,7 @@ void SettingWindow::on_pushButton_clear_clicked()
         this->m_ui->lineEdit_sideLength->clear();
         this->m_ui->lineEdit_labelWidth->clear();
         this->m_ui->lineEdit_labelHeight->clear();
+        this->m_ui->lineEdit_blockNum->clear();
     }else if(index==0){
         if(QMessageBox::question(this,"清除基础配置警告","请确认是否要清除基础配置！！！") == QMessageBox::StandardButton::Yes){
             this->m_ui->lineEdit_extractFile->clear();
@@ -181,6 +183,11 @@ void SettingWindow::on_listView_settings_doubleClicked(const QModelIndex &index)
         this->m_ui->lineEdit_sideLength->setText(QString::number(json.value("extract_sideLength").toInt()));
         this->m_ui->lineEdit_labelWidth->setText(QString::number(json.value("label_width").toDouble()));
         this->m_ui->lineEdit_labelHeight->setText(QString::number(json.value("label_height").toDouble()));
+        if (json.contains("block_number")){
+            this->m_ui->lineEdit_blockNum->setText(QString::number(json.value("block_number").toInt()));
+        }else{
+            this->m_ui->lineEdit_blockNum->setText(QString::number(10));
+        }
     }
 }
 
@@ -205,6 +212,7 @@ void SettingWindow::on_pushButton_ok_clicked()
         QString extract_sideLength_str = this->m_ui->lineEdit_sideLength->text(); // 边长
         QString label_width_str = this->m_ui->lineEdit_labelWidth->text(); // 标签宽
         QString label_height_str = this->m_ui->lineEdit_labelHeight->text(); // 标签高
+        QString block_num_str = this->m_ui->lineEdit_blockNum->text().isEmpty() ? this->m_ui->lineEdit_blockNum->placeholderText().isEmpty() ? "10" : this->m_ui->lineEdit_blockNum->placeholderText() : this->m_ui->lineEdit_blockNum->text();  // 块数量
 
         if (setting_name.isEmpty() || extract_width_str.isEmpty() || extract_height_str.isEmpty()){
             QMessageBox::information(this,"提示","配置名称、二维码边长或提取宽高不允许为空");
@@ -218,6 +226,7 @@ void SettingWindow::on_pushButton_ok_clicked()
         int extract_sideLength = extract_sideLength_str.toInt();
         double label_width = label_width_str.toDouble();
         double label_height = label_height_str.toDouble();
+        int block_number = block_num_str.toInt();
 
         QJsonObject jsonObj;
         jsonObj["setting_name"] = setting_name;
@@ -228,6 +237,7 @@ void SettingWindow::on_pushButton_ok_clicked()
         jsonObj["extract_sideLength"] = extract_sideLength;
         jsonObj["label_width"] = label_width;
         jsonObj["label_height"] = label_height;
+        jsonObj["block_number"] = block_number;
 
         fs::path setting_file_path = fs::current_path();
         setting_file_path.append("settings");
@@ -281,7 +291,8 @@ void SettingWindow::on_pushButton_ok_clicked()
             jsonObj["is_ding_notice"] = is_ding_notice; // 是否通知钉钉
             jsonObj["python_exe_path"] = python_exe_path; // python执行路径
             jsonObj["python_script_path"] = python_script_path; // python 脚本的执行路径
-            jsonObj["parallel_count"] = parallel_count;
+            jsonObj["parallel_count"] = parallel_count; // 并行数据
+
 
             fs::path setting_file_path = fs::current_path();
             setting_file_path.append("settings");
@@ -366,6 +377,7 @@ void SettingWindow::deleteItem()
     this->m_ui->lineEdit_sideLength->clear();
     this->m_ui->lineEdit_labelWidth->clear();
     this->m_ui->lineEdit_labelHeight->clear();
+    this->m_ui->lineEdit_blockNum->clear();
 
     QMessageBox::information(this,"提示","删除文件成功");
 

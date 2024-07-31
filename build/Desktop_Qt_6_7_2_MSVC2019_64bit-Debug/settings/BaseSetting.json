@@ -1,0 +1,11 @@
+{
+    "ding_ding_url": "",
+    "extract_path": "E:/Projects/QtWorkspace/CLineLaserExtract/build/Desktop_Qt_6_7_2_MSVC2019_64bit-Debug",
+    "failed_image_path": "E:/Projects/QtWorkspace/CLineLaserExtract/build/Desktop_Qt_6_7_2_MSVC2019_64bit-Debug/FailedSeed",
+    "is_ding_notice": false,
+    "is_upload_server": false,
+    "parallel_count": 1,
+    "python_exe_path": "D:/Softwares/minianaconda3/python.exe",
+    "python_script_path": "E:/Projects/PyProjects/alsm/t.py",
+    "upload_save_path": "E:/Projects/QtWorkspace/CLineLaserExtract/build/Desktop_Qt_6_7_2_MSVC2019_64bit-Debug/UploadSeed"
+}

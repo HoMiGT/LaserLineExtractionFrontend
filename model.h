@@ -76,6 +76,7 @@ struct TaskInfo {
 	int qrSideLength; // 二维码边长
 	double labelWidth;  // 二维码宽
 	double labelHeight;  // 二维码高
+    int blockNum;  // 粉块数量
 };
 
 // 任务运行结构体

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'taskdailog.ui'
 **
-** Created by: Qt User Interface Compiler version 6.4.1
+** Created by: Qt User Interface Compiler version 6.7.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -53,7 +53,7 @@ public:
         if (TaskDailog->objectName().isEmpty())
             TaskDailog->setObjectName("TaskDailog");
         TaskDailog->resize(534, 337);
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        QSizePolicy sizePolicy(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(TaskDailog->sizePolicy().hasHeightForWidth());
@@ -63,7 +63,7 @@ public:
         TaskDailog->setFont(font);
         verticalLayout = new QVBoxLayout(TaskDailog);
         verticalLayout->setObjectName("verticalLayout");
-        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         verticalLayout->addItem(verticalSpacer_2);
 
@@ -71,7 +71,7 @@ public:
         widget->setObjectName("widget");
         horizontalLayout_3 = new QHBoxLayout(widget);
         horizontalLayout_3->setObjectName("horizontalLayout_3");
-        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
         horizontalLayout_3->addItem(horizontalSpacer_3);
 
@@ -119,7 +119,7 @@ public:
 
         horizontalLayout_3->addLayout(formLayout);
 
-        horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
         horizontalLayout_3->addItem(horizontalSpacer_4);
 
@@ -129,13 +129,13 @@ public:
 
         verticalLayout->addWidget(widget);
 
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         verticalLayout->addItem(verticalSpacer);
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName("horizontalLayout_2");
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
         horizontalLayout_2->addItem(horizontalSpacer);
 
@@ -144,7 +144,7 @@ public:
         pushButton_ok->setMinimumSize(QSize(80, 40));
         pushButton_ok->setMaximumSize(QSize(80, 40));
         QIcon icon;
-        icon.addFile(QString::fromUtf8(":/Icon/ok.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/Icon/ok.svg"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         pushButton_ok->setIcon(icon);
         pushButton_ok->setIconSize(QSize(20, 20));
 
@@ -155,12 +155,12 @@ public:
         pushButton_close->setMinimumSize(QSize(80, 40));
         pushButton_close->setMaximumSize(QSize(80, 40));
         QIcon icon1;
-        icon1.addFile(QString::fromUtf8(":/Icon/no_ok.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QString::fromUtf8(":/Icon/no_ok.svg"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         pushButton_close->setIcon(icon1);
 
         horizontalLayout_2->addWidget(pushButton_close);
 
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Minimum);
 
         horizontalLayout_2->addItem(horizontalSpacer_2);
 

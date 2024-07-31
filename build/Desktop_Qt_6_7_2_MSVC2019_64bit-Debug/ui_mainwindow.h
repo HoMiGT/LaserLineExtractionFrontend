@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 6.4.1
+** Created by: Qt User Interface Compiler version 6.7.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -78,7 +78,7 @@ public:
             MainWindow->setObjectName("MainWindow");
         MainWindow->setWindowModality(Qt::ApplicationModal);
         MainWindow->resize(1241, 734);
-        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        QSizePolicy sizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
@@ -86,17 +86,17 @@ public:
         action_setting = new QAction(MainWindow);
         action_setting->setObjectName("action_setting");
         QIcon icon;
-        icon.addFile(QString::fromUtf8(":/Icon/action_setting.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/Icon/action_setting.svg"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         action_setting->setIcon(icon);
         action_exit = new QAction(MainWindow);
         action_exit->setObjectName("action_exit");
         QIcon icon1;
-        icon1.addFile(QString::fromUtf8(":/Icon/exit.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QString::fromUtf8(":/Icon/exit.svg"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         action_exit->setIcon(icon1);
         action_help = new QAction(MainWindow);
         action_help->setObjectName("action_help");
         QIcon icon2;
-        icon2.addFile(QString::fromUtf8(":/Icon/menu_help.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QString::fromUtf8(":/Icon/menu_help.svg"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         action_help->setIcon(icon2);
         QFont font;
         font.setPointSize(12);
@@ -108,9 +108,13 @@ public:
         if (QIcon::hasThemeIcon(iconThemeName)) {
             icon3 = QIcon::fromTheme(iconThemeName);
         } else {
-            icon3.addFile(QString::fromUtf8(":/Icon/add_task.svg"), QSize(), QIcon::Normal, QIcon::Off);
+            icon3.addFile(QString::fromUtf8(":/Icon/add_task.svg"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+            icon3.addFile(QString::fromUtf8(":/Icon/add_task.svg"), QSize(), QIcon::Mode::Normal, QIcon::State::On);
         }
         action_addTask->setIcon(icon3);
+        action_addTask->setMenuRole(QAction::TextHeuristicRole);
+        action_addTask->setIconVisibleInMenu(true);
+        action_addTask->setPriority(QAction::NormalPriority);
         action_clearList = new QAction(MainWindow);
         action_clearList->setObjectName("action_clearList");
         QIcon icon4;
@@ -118,7 +122,7 @@ public:
         if (QIcon::hasThemeIcon(iconThemeName)) {
             icon4 = QIcon::fromTheme(iconThemeName);
         } else {
-            icon4.addFile(QString::fromUtf8(":/Icon/clear_task.svg"), QSize(), QIcon::Normal, QIcon::Off);
+            icon4.addFile(QString::fromUtf8(":/Icon/clear_task.svg"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         }
         action_clearList->setIcon(icon4);
         action_startTask = new QAction(MainWindow);
@@ -128,7 +132,7 @@ public:
         if (QIcon::hasThemeIcon(iconThemeName)) {
             icon5 = QIcon::fromTheme(iconThemeName);
         } else {
-            icon5.addFile(QString::fromUtf8(":/Icon/start_no.svg"), QSize(), QIcon::Normal, QIcon::Off);
+            icon5.addFile(QString::fromUtf8(":/Icon/start_no.svg"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
         }
         action_startTask->setIcon(icon5);
         centralwidget = new QWidget(MainWindow);
@@ -176,7 +180,7 @@ public:
         formLayout->setVerticalSpacing(15);
         label_taskName = new QLabel(groupBox_taskStates);
         label_taskName->setObjectName("label_taskName");
-        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        QSizePolicy sizePolicy1(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Preferred);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(label_taskName->sizePolicy().hasHeightForWidth());
@@ -332,7 +336,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1241, 27));
+        menubar->setGeometry(QRect(0, 0, 1241, 26));
         menubar->setFont(font);
         menubar->setDefaultUp(false);
         menu_file = new QMenu(menubar);
@@ -347,7 +351,11 @@ public:
         MainWindow->setStatusBar(statusbar);
         toolBar = new QToolBar(MainWindow);
         toolBar->setObjectName("toolBar");
-        MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
+        toolBar->setMovable(false);
+        toolBar->setIconSize(QSize(24, 24));
+        toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        toolBar->setFloatable(true);
+        MainWindow->addToolBar(Qt::ToolBarArea::TopToolBarArea, toolBar);
 
         menubar->addAction(menu_file->menuAction());
         menubar->addAction(menu_help->menuAction());
@@ -399,6 +407,9 @@ public:
 #if QT_CONFIG(statustip)
         action_addTask->setStatusTip(QCoreApplication::translate("MainWindow", "Ctrl+A \346\267\273\345\212\240\344\273\273\345\212\241", nullptr));
 #endif // QT_CONFIG(statustip)
+#if QT_CONFIG(whatsthis)
+        action_addTask->setWhatsThis(QCoreApplication::translate("MainWindow", "\346\267\273\345\212\240\344\273\273\345\212\241", nullptr));
+#endif // QT_CONFIG(whatsthis)
 #if QT_CONFIG(shortcut)
         action_addTask->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+A", nullptr));
 #endif // QT_CONFIG(shortcut)

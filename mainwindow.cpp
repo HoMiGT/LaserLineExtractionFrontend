@@ -2,7 +2,6 @@
 #include "ui_mainwindow.h"
 #include <QDesktopServices>
 #include <QUrl>
-#include <fstream>
 #include <filesystem>
 #include <QMessageBox>
 #include "cnlhelper.h"
@@ -34,6 +33,10 @@ MainWindow::MainWindow(QWidget* parent)
 
 	m_uiSetting = new SettingWindow(this);  // 初始化配置界面指针
 	connect(m_uiSetting, &SettingWindow::updateSetting, this, &MainWindow::updateSetting);
+
+    m_ui->action_addTask->setIcon(QIcon(":/Icon/add_task.svg"));
+    m_ui->action_clearList->setIcon(QIcon(":/Icon/clear_task.svg"));
+    m_ui->action_startTask->setIcon(QIcon(":/Icon/start_no.svg"));
 
 	m_ui->tableView_taskList->setShowGrid(true);  // 初始化tableview控件
 	m_ui->tableView_taskList->setGridStyle(Qt::DotLine);
@@ -162,8 +165,10 @@ void MainWindow::dailogAddTask(QPair<QString, QString> msg)
 	int qrSideLength = customeJsonObj.value("extract_sideLength").toInt(); // 二维码边长
 	double labelWidth = customeJsonObj.value("label_width").toDouble(); // 标签宽
 	double labelHeight = customeJsonObj.value("label_height").toDouble(); // 标签高
-
-
+    int block_num = 10;
+    if (customeJsonObj.contains("block_number")){
+        block_num = customeJsonObj.value("block_number").toInt();
+    }
 	auto ti = std::make_shared<TaskInfo>();
 	ti->configName = msg.first;
 	ti->taskName = taskName;
@@ -186,6 +191,7 @@ void MainWindow::dailogAddTask(QPair<QString, QString> msg)
 	ti->qrSideLength = qrSideLength;
 	ti->labelWidth = labelWidth;
 	ti->labelHeight = labelHeight;
+    ti->blockNum = block_num;
 
 	m_taskMap.insert(msg.first + "_" + timestamp, ti);
 
@@ -290,6 +296,8 @@ bool MainWindow::multiRunTask(std::shared_ptr<TaskInfo>& task_info)
 			info["qr_side_length"] = task_info->qrSideLength;
 			info["label_width"] = task_info->labelWidth;
 			info["label_height"] = task_info->labelHeight;
+            info["block_number"] = task_info->blockNum;
+
 
 			std::unique_ptr<QJsonObject> info_ptr = std::make_unique<QJsonObject>(info);
 			ExcutePythonScript* task = new ExcutePythonScript(task_info->pythonExePath, task_info->pythonScriptPath, std::move(info_ptr));

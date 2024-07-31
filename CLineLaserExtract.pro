@@ -38,7 +38,13 @@ RESOURCES += \
     Pinyin.qrc \
     icon.qrc
 
-win32: LIBS += -L$$PWD/../../../vcpkg/installed/x64-windows/lib/ -lcpr
 
 INCLUDEPATH += $$PWD/../../../vcpkg/installed/x64-windows/include
 DEPENDPATH += $$PWD/../../../vcpkg/installed/x64-windows/include
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../vcpkg/installed/x64-windows/lib/ -lcpr
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../vcpkg/installed/x64-windows/debug/lib -lcpr
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../vcpkg/installed/x64-windows/lib/ -llibcurl
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../vcpkg/installed/x64-windows/debug/lib/ -llibcurl
