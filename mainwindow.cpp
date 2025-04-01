@@ -17,6 +17,10 @@
 #include <QProcess>
 #include <QJsonDocument>
 #include <cpr/cpr.h>
+#include <sstream>
+#include <string>
+#include <iostream>
+#include <cmath>
 
 namespace fs = std::filesystem;
 
@@ -34,9 +38,9 @@ MainWindow::MainWindow(QWidget* parent)
 	m_uiSetting = new SettingWindow(this);  // 初始化配置界面指针
 	connect(m_uiSetting, &SettingWindow::updateSetting, this, &MainWindow::updateSetting);
 
-    m_ui->action_addTask->setIcon(QIcon(":/Icon/add_task.svg"));
-    m_ui->action_clearList->setIcon(QIcon(":/Icon/clear_task.svg"));
-    m_ui->action_startTask->setIcon(QIcon(":/Icon/start_no.svg"));
+	m_ui->action_addTask->setIcon(QIcon(":/Icon/add_task.svg"));
+	m_ui->action_clearList->setIcon(QIcon(":/Icon/clear_task.svg"));
+	m_ui->action_startTask->setIcon(QIcon(":/Icon/start_no.svg"));
 
 	m_ui->tableView_taskList->setShowGrid(true);  // 初始化tableview控件
 	m_ui->tableView_taskList->setGridStyle(Qt::DotLine);
@@ -52,6 +56,7 @@ MainWindow::MainWindow(QWidget* parent)
 
 	m_ui->lcdNumber_success->setFixedWidth(m_ui->lcdNumber_success->sizeHint().width()); // 调整lcdnumber显示
 	m_ui->lcdNumber_fail->setFixedWidth(m_ui->lcdNumber_fail->sizeHint().width());
+	m_ui->lcdNumber_checkSumCount->setFixedWidth(m_ui->lcdNumber_checkSumCount->sizeHint().width());
 
 	m_taskTimer = new QTimer(this); // 初始化更新状态定时器
 	connect(m_taskTimer, &QTimer::timeout, this, &MainWindow::updateTaskState);
@@ -148,6 +153,15 @@ void MainWindow::dailogAddTask(QPair<QString, QString> msg)
 	auto isUploadServer = m_jsonObj->value("is_upload_server").toBool(); // 是否上传服务器
 	auto pythonExePath = m_jsonObj->value("python_exe_path").toString();  // python解释器的执行路径
 	auto pythonScriptPath = m_jsonObj->value("python_script_path").toString();  // python执行脚本
+	QFileInfo pyScriptFileInfo(pythonScriptPath);
+	QDir pyScriptDir(pyScriptFileInfo.absolutePath());
+	std::stringstream ss;
+	ss << pythonExePath.toStdString();
+	ss << " ";
+	ss << pyScriptDir.absolutePath().toStdString();
+	ss << "/count_num.py";
+	ss << " -config ";
+	auto pythonStaticScriptPath = QString::fromStdString(ss.str());
 
 	QDir dir;
 	if (!dir.exists(savedSeedPath)) { dir.mkpath(savedSeedPath); }
@@ -165,10 +179,10 @@ void MainWindow::dailogAddTask(QPair<QString, QString> msg)
 	int qrSideLength = customeJsonObj.value("extract_sideLength").toInt(); // 二维码边长
 	double labelWidth = customeJsonObj.value("label_width").toDouble(); // 标签宽
 	double labelHeight = customeJsonObj.value("label_height").toDouble(); // 标签高
-    int block_num = 10;
-    if (customeJsonObj.contains("block_number")){
-        block_num = customeJsonObj.value("block_number").toInt();
-    }
+	int block_num = 10;
+	if (customeJsonObj.contains("block_number")) {
+		block_num = customeJsonObj.value("block_number").toInt();
+	}
 	auto ti = std::make_shared<TaskInfo>();
 	ti->configName = msg.first;
 	ti->taskName = taskName;
@@ -191,7 +205,9 @@ void MainWindow::dailogAddTask(QPair<QString, QString> msg)
 	ti->qrSideLength = qrSideLength;
 	ti->labelWidth = labelWidth;
 	ti->labelHeight = labelHeight;
-    ti->blockNum = block_num;
+	ti->blockNum = block_num;
+	ti->extractCheckCount = 0;
+	ti->pythonStatisticsPath = pythonStaticScriptPath;
 
 	m_taskMap.insert(msg.first + "_" + timestamp, ti);
 
@@ -241,6 +257,7 @@ void MainWindow::updateTaskState()
 	m_ui->lcdNumber_success->display(updateInfo->extractSuccessCount);
 	m_ui->lcdNumber_fail->display(updateInfo->extractFailedCount);
 	m_ui->progressBar_successRatio->setValue(static_cast<int>(updateInfo->successRatio));
+	m_ui->lcdNumber_checkSumCount->display(updateInfo->extractCheckCount);
 
 	int spend_time = 0;
 	if (updateInfo->endTime.isNull()) {
@@ -296,7 +313,7 @@ bool MainWindow::multiRunTask(std::shared_ptr<TaskInfo>& task_info)
 			info["qr_side_length"] = task_info->qrSideLength;
 			info["label_width"] = task_info->labelWidth;
 			info["label_height"] = task_info->labelHeight;
-            info["block_number"] = task_info->blockNum;
+			info["block_number"] = task_info->blockNum;
 
 
 			std::unique_ptr<QJsonObject> info_ptr = std::make_unique<QJsonObject>(info);
@@ -350,6 +367,7 @@ void MainWindow::on_tableView_taskList_doubleClicked(const QModelIndex& index)
 	m_ui->lcdNumber_success->display(ti->extractSuccessCount);
 	m_ui->lcdNumber_fail->display(ti->extractFailedCount);
 	m_ui->progressBar_successRatio->setValue(ti->successRatio);
+	m_ui->lcdNumber_checkSumCount->display(ti->extractCheckCount);
 	int spend_time = 0;
 	if (ti->startTime.isNull()) {
 		m_ui->lineEdit_spendTime->setText("");
@@ -493,7 +511,6 @@ void MyTask::run()
 {
 	for (auto task = m_mainwindow->m_taskMap.begin(); task != m_mainwindow->m_taskMap.end(); task++) {
 		if (m_mainwindow->m_startActionState != StartActionColor::RED) { break; }
-
 		// 1. 设置当前正在运行的任务
 		m_mainwindow->m_currentTaskName = task.value()->taskName;
 		// 2. 执行任务  阻塞 要么成功，要么失败
@@ -507,6 +524,18 @@ void MyTask::run()
 		if (!is_success) { // 失败打印信息
 			qWarning() << "`" << task_info->taskName << "`任务执行失败";
 		}
+		// 4. 调用python脚本并获取输出
+		std::stringstream ss;
+		ss << task_info->pythonStatisticsPath.toStdString();
+		ss << "\"{\\\"extract_path\\\": \\\"";
+		ss << task_info->extractImagePath.toStdString();
+		ss << "\\\"}\"";
+		auto py_script = ss.str();
+		auto py_statistics_count = execute_python_script(py_script);
+		if (py_statistics_count != -1) {
+			task_info->extractCheckCount = py_statistics_count;
+		}
+
 		task_info->status = TaskState::SUCCESS;
 		m_mainwindow->updateTableViewState(task_info->taskName, task_info->status);
 		if (task_info->isUploadServer) { // 上传服务器，需要修改文件夹名
@@ -575,8 +604,15 @@ void MyTask::run()
 				QString::fromStdString("\r\n提取成功标签数: ") + QString::number(task_info->extractSuccessCount) +
 				QString::fromStdString("\r\n提取成功率: ") + QString::number(task_info->successRatio) +
 				QString::fromStdString("% \r\n提取失败标签数: ") + QString::number(task_info->extractFailedCount) +
-				QString::fromStdString("\r\n耗时: ") + QString::number(spend_hour) + ":" + QString::number(spend_minues) + ":" + QString::number(spend_seconds);
-			QString str_body = "{\"msgtype\":\"text\",\"text\":{\"content\":\"" + format_msg + "\"}}";
+				QString::fromStdString("\r\n耗时: ") + QString::number(spend_hour) + ":" + QString::number(spend_minues) + ":" + QString::number(spend_seconds) +
+				QString::fromStdString("\r\n提取检测数量: ") + QString::number(task_info->extractCheckCount);
+			QString str_body;
+			if (std::abs(task_info->extractCheckCount - task_info->extractSuccessCount) > 1000) {
+				str_body = "{\"msgtype\":\"text\",\"text\":{\"content\":\"" + format_msg + "\"},\"at\":{\"atMobiles\":[\"15531096027\",\"19305819383\",\"13967133248\"],\"isAtAll\":false}}";
+			}
+			else {
+				str_body = "{\"msgtype\":\"text\",\"text\":{\"content\":\"" + format_msg + "\"}}";
+			}
 			sendDingDingNotice(str_body, task_info->dingDingUrl);
 		}
 	}

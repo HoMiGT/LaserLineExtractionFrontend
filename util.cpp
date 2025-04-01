@@ -1,6 +1,9 @@
 #include "util.h"
 #include <QDir>
-
+#include <iostream>
+#include <string>
+#include <cstdio>
+#include <QRegularExpression>
 
 std::optional<QJsonObject> readJsonFile(const fs::path& file)
 {
@@ -241,4 +244,35 @@ void clear_folder() {
 			qDebug() << "无法删除文件" << fileInfo.absoluteFilePath();
 		}
 	}
+}
+
+int execute_python_script(const std::string& python_script) {
+	int result = { -1 };
+	std::string py_result;
+	try {
+		FILE* pipe = _popen(python_script.c_str(), "r");
+		if (!pipe) {
+			return result;
+		}
+		char buffer[128];
+		while (!feof(pipe)) {
+			if (fgets(buffer, sizeof(buffer), pipe) != nullptr) {
+				py_result += buffer;
+			}
+		}
+		if (pipe) {
+			_pclose(pipe);
+		}
+		QRegularExpression regex(R"(count_all:\s+(\d+))");
+		QRegularExpressionMatch match = regex.match(QString::fromStdString(py_result));
+		if (match.hasMatch()) {
+			if (auto countAllValue = match.captured(1); !countAllValue.isEmpty()) {
+				result = countAllValue.toInt();
+			}
+		}
+	}
+	catch (const std::exception& e) {
+		qDebug() << "error: " << e.what();
+	}
+	return result;
 }

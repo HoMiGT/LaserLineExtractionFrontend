@@ -29,5 +29,7 @@ void logToFile(const QString& message);
 
 void clear_folder();
 
+int execute_python_script(const std::string& python_script);
+
 
 
