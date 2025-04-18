@@ -612,7 +612,7 @@ void MyTask::run()
 				QString::fromStdString("\r\n耗时: ") + QString::number(spend_hour) + ":" + QString::number(spend_minues) + ":" + QString::number(spend_seconds) +
 				QString::fromStdString("\r\n提取检测数量: ") + QString::number(task_info->extractCheckCount);
 			QString str_body;
-			if (std::abs(task_info->extractCheckCount - task_info->extractSuccessCount) > 500) {
+			if (std::abs(task_info->extractCheckCount - task_info->extractSuccessCount) > 1000) {
 				str_body = "{\"msgtype\":\"text\",\"text\":{\"content\":\"" + format_msg + "\"},\"at\":{\"atMobiles\":[\"15531096027\",\"19305819383\",\"13967133248\"],\"isAtAll\":false}}";
 			}
 			else {
