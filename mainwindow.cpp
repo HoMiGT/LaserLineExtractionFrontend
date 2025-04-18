@@ -21,6 +21,8 @@
 #include <string>
 #include <iostream>
 #include <cmath>
+#include <format>
+#include "NavLogger.h"
 
 namespace fs = std::filesystem;
 
@@ -287,6 +289,10 @@ void MainWindow::taskFininshed()
 	}
 }
 
+void MainWindow::updateLabelCount(QString taskName, int count) {
+	m_taskMap[taskName]->extractCheckCount = count;
+}
+
 // 并发执行任务
 bool MainWindow::multiRunTask(std::shared_ptr<TaskInfo>& task_info)
 {
@@ -320,7 +326,17 @@ bool MainWindow::multiRunTask(std::shared_ptr<TaskInfo>& task_info)
 			ExcutePythonScript* task = new ExcutePythonScript(task_info->pythonExePath, task_info->pythonScriptPath, std::move(info_ptr));
 			m_threadPool.start(task); // 添加任务到线程池
 		}
-
+		// 4. 调用python脚本并获取输出
+		std::stringstream ss;
+		ss << task_info->pythonStatisticsPath.toStdString();
+		ss << "\"{\\\"extract_path\\\": \\\"";
+		ss << task_info->extractImagePath.toStdString();
+		ss << "\\\"}\"";
+		auto py_script = ss.str();
+		auto pySender = std::make_unique<PythonGetLabelCountSender>();
+		connect(pySender.get(), &PythonGetLabelCountSender::labelCount, this, &MainWindow::updateLabelCount);
+		auto pyTask = new PythonGetLabelCount(task_info->taskName, py_script, std::move(pySender));
+		m_threadPool.start(pyTask);
 		// 4. 等待所有任务完成，更新状态，以及完成文件夹名修改
 		m_threadPool.waitForDone(); // 等待所有任务完成
 
@@ -524,17 +540,6 @@ void MyTask::run()
 		if (!is_success) { // 失败打印信息
 			qWarning() << "`" << task_info->taskName << "`任务执行失败";
 		}
-		// 4. 调用python脚本并获取输出
-		std::stringstream ss;
-		ss << task_info->pythonStatisticsPath.toStdString();
-		ss << "\"{\\\"extract_path\\\": \\\"";
-		ss << task_info->extractImagePath.toStdString();
-		ss << "\\\"}\"";
-		auto py_script = ss.str();
-		auto py_statistics_count = execute_python_script(py_script);
-		if (py_statistics_count != -1) {
-			task_info->extractCheckCount = py_statistics_count;
-		}
 
 		task_info->status = TaskState::SUCCESS;
 		m_mainwindow->updateTableViewState(task_info->taskName, task_info->status);
@@ -607,7 +612,7 @@ void MyTask::run()
 				QString::fromStdString("\r\n耗时: ") + QString::number(spend_hour) + ":" + QString::number(spend_minues) + ":" + QString::number(spend_seconds) +
 				QString::fromStdString("\r\n提取检测数量: ") + QString::number(task_info->extractCheckCount);
 			QString str_body;
-			if (std::abs(task_info->extractCheckCount - task_info->extractSuccessCount) > 1000) {
+			if (std::abs(task_info->extractCheckCount - task_info->extractSuccessCount) > 500) {
 				str_body = "{\"msgtype\":\"text\",\"text\":{\"content\":\"" + format_msg + "\"},\"at\":{\"atMobiles\":[\"15531096027\",\"19305819383\",\"13967133248\"],\"isAtAll\":false}}";
 			}
 			else {
@@ -635,3 +640,24 @@ void MyTask::sendDingDingNotice(QString& body, QString& url)
 	}
 }
 
+PythonGetLabelCount::PythonGetLabelCount(const QString& taskName, const std::string& pyCommand,
+	std::unique_ptr<PythonGetLabelCountSender> sender)
+	:m_taskName(taskName), m_pyCommand(pyCommand), m_sender(std::move(sender))
+{
+}
+
+
+void PythonGetLabelCount::run() {
+	try {
+		auto count = execute_python_script(m_pyCommand);
+		m_sender->sendLabelCount(m_taskName, count);
+	}
+	catch (std::exception& e) {
+		LOG_ERROR(std::format("Python统计标签理论个数错误: {}", e.what()));
+	}
+}
+
+void PythonGetLabelCountSender::sendLabelCount(QString taskName, int count)
+{
+	emit labelCount(taskName, count);
+}
