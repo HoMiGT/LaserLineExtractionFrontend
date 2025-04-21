@@ -76,6 +76,7 @@ private:
 	QTimer* m_taskTimer;  // 定时任务更新
 	int m_cpuCount{ 0 }; // cpu的系统核数
 	QThreadPool m_threadPool;  // 线程池
+	QString m_dingNoticePhones;  // 钉钉提醒人
 
 };
 

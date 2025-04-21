@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget* parent)
 
 	baseSettingJson(m_jsonObj); // 初始化配置
 	m_cpuCount = m_jsonObj->value("parallel_count").toInt();
+	m_dingNoticePhones = m_jsonObj->value("ding_notice_phones").toString();
 
 	m_uiSetting = new SettingWindow(this);  // 初始化配置界面指针
 	connect(m_uiSetting, &SettingWindow::updateSetting, this, &MainWindow::updateSetting);
@@ -210,6 +211,7 @@ void MainWindow::dailogAddTask(QPair<QString, QString> msg)
 	ti->blockNum = block_num;
 	ti->extractCheckCount = 0;
 	ti->pythonStatisticsPath = pythonStaticScriptPath;
+	ti->dingNoticePhones = m_dingNoticePhones;
 
 	m_taskMap.insert(msg.first + "_" + timestamp, ti);
 
@@ -613,7 +615,26 @@ void MyTask::run()
 				QString::fromStdString("\r\n提取检测数量: ") + QString::number(task_info->extractCheckCount);
 			QString str_body;
 			if (std::abs(task_info->extractCheckCount - task_info->extractSuccessCount) > 1000) {
-				str_body = "{\"msgtype\":\"text\",\"text\":{\"content\":\"" + format_msg + "\"},\"at\":{\"atMobiles\":[\"15531096027\",\"19305819383\",\"13967133248\"],\"isAtAll\":false}}";
+				if (task_info->dingNoticePhones.isEmpty()) {
+					str_body = "{\"msgtype\":\"text\",\"text\":{\"content\":\"" + format_msg + "\"}}";
+				}
+				else {
+					std::string phonesStr;
+					if (task_info->dingNoticePhones.contains(";")) {
+						std::stringstream ss;
+						for (auto& item : task_info->dingNoticePhones.split(";")) {
+							if (item.isEmpty())
+								continue;
+							ss << "\"" << item.toStdString() << "\",";
+						}
+						phonesStr = ss.str();
+						phonesStr.pop_back();
+					}
+					else {
+						phonesStr = task_info->dingNoticePhones.toStdString();
+					}
+					str_body = "{\"msgtype\":\"text\",\"text\":{\"content\":\"" + format_msg + "\"},\"at\":{\"atMobiles\":[" + QString::fromStdString(phonesStr) + "],\"isAtAll\":false}}";
+				}
 			}
 			else {
 				str_body = "{\"msgtype\":\"text\",\"text\":{\"content\":\"" + format_msg + "\"}}";

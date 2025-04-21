@@ -79,6 +79,7 @@ struct TaskInfo {
 	int blockNum;  // 粉块数量
 	QString pythonStatisticsPath; // python统计路径
 	int extractCheckCount;  // 提取的检测数量
+	QString dingNoticePhones;  // 钉钉通知人
 };
 
 // 任务运行结构体

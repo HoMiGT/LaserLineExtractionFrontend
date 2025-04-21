@@ -78,6 +78,8 @@ public:
     QPushButton *pushButton_pythonScript;
     QLabel *label_2;
     QLineEdit *lineEdit_parallelCount;
+    QLabel *label_16;
+    QLineEdit *lineEdit_dingTalkPhones;
     QSpacerItem *verticalSpacer;
     QWidget *page_other;
     QVBoxLayout *verticalLayout_7;
@@ -118,7 +120,7 @@ public:
     {
         if (SettingWindow->objectName().isEmpty())
             SettingWindow->setObjectName("SettingWindow");
-        SettingWindow->resize(1144, 671);
+        SettingWindow->resize(1149, 710);
         QFont font;
         font.setPointSize(12);
         SettingWindow->setFont(font);
@@ -409,6 +411,18 @@ public:
 
         formLayout_3->setWidget(8, QFormLayout::FieldRole, lineEdit_parallelCount);
 
+        label_16 = new QLabel(widget_base);
+        label_16->setObjectName("label_16");
+
+        formLayout_3->setWidget(9, QFormLayout::LabelRole, label_16);
+
+        lineEdit_dingTalkPhones = new QLineEdit(widget_base);
+        lineEdit_dingTalkPhones->setObjectName("lineEdit_dingTalkPhones");
+        lineEdit_dingTalkPhones->setMinimumSize(QSize(0, 40));
+        lineEdit_dingTalkPhones->setMaximumSize(QSize(16777215, 40));
+
+        formLayout_3->setWidget(9, QFormLayout::FieldRole, lineEdit_dingTalkPhones);
+
 
         verticalLayout_9->addLayout(formLayout_3);
 
@@ -642,7 +656,7 @@ public:
         SettingWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(SettingWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1144, 26));
+        menubar->setGeometry(QRect(0, 0, 1149, 26));
         SettingWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(SettingWindow);
         statusbar->setObjectName("statusbar");
@@ -650,7 +664,7 @@ public:
 
         retranslateUi(SettingWindow);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(SettingWindow);
@@ -681,6 +695,7 @@ public:
         label_12->setText(QCoreApplication::translate("SettingWindow", "python\350\204\232\346\234\254\350\267\257\345\276\204:", nullptr));
         pushButton_pythonScript->setText(QCoreApplication::translate("SettingWindow", "...", nullptr));
         label_2->setText(QCoreApplication::translate("SettingWindow", "GPU\345\271\266\350\241\214\346\225\260:", nullptr));
+        label_16->setText(QCoreApplication::translate("SettingWindow", "\351\222\211\351\222\211\351\200\232\347\237\245\346\211\213\346\234\272\345\217\267:", nullptr));
         groupBox_other->setTitle(QCoreApplication::translate("SettingWindow", "\346\217\220\345\217\226\351\205\215\347\275\256", nullptr));
         label->setText(QCoreApplication::translate("SettingWindow", "\351\205\215\347\275\256\345\220\215\347\247\260:", nullptr));
         label_4->setText(QCoreApplication::translate("SettingWindow", "\351\225\255\345\260\204\345\214\272\345\237\237\345\256\275\351\253\230:", nullptr));

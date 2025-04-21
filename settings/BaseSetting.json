@@ -1,5 +1,6 @@
 {
     "ding_ding_url": "https://oapi.dingtalk.com/robot/send?access_token=77165aab1bf4c8960e6183c00cdf323f193b3eec4749d48988bcb365b0962a2c",
+    "ding_notice_phones": "15531096027;19305819383;13967133248",
     "extract_path": "E:/Projects/test_extractImage",
     "failed_image_path": "E:/Projects/test_failedImage",
     "is_ding_notice": true,
