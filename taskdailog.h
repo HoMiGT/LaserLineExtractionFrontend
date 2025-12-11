@@ -1,9 +1,10 @@
 #pragma once
 
 #include <QDialog>
-#include <model.h>
 #include <QPair>
 #include <QString>
+
+#include "model.h"
 
 namespace Ui {
 class TaskDailog;

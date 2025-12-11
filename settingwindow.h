@@ -48,6 +48,9 @@ private slots:
 
     void on_pushButton_extractFile_clicked();
 
+
+    void on_pushButton_pythonCountScript_clicked();
+
 private:
     Ui::SettingWindow *m_ui;
     QIntValidator *m_intValidator;

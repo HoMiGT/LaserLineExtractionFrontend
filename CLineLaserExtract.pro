@@ -2,7 +2,7 @@ QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++17
+CONFIG += c++20
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -47,4 +47,7 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../vcpkg/installe
 
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../vcpkg/installed/x64-windows/lib/ -llibcurl
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../vcpkg/installed/x64-windows/debug/lib/ -llibcurl
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../vcpkg/installed/x64-windows/debug/lib/ -llibcurl-d
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../vcpkg/installed/x64-windows/lib/ -lfmt
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../vcpkg/installed/x64-windows/debug/lib/ -lfmtd

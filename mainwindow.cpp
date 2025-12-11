@@ -19,7 +19,6 @@
 #include <cpr/cpr.h>
 #include <sstream>
 #include <string>
-#include <iostream>
 #include <cmath>
 #include <format>
 #include "NavLogger.h"
@@ -156,7 +155,9 @@ void MainWindow::dailogAddTask(QPair<QString, QString> msg)
 	auto isUploadServer = m_jsonObj->value("is_upload_server").toBool(); // 是否上传服务器
 	auto pythonExePath = m_jsonObj->value("python_exe_path").toString();  // python解释器的执行路径
 	auto pythonScriptPath = m_jsonObj->value("python_script_path").toString();  // python执行脚本
-	QFileInfo pyScriptFileInfo(pythonScriptPath);
+	auto pythonCountScriptPath = m_jsonObj->value("python_count_script_path").toString();  // 统计数量脚本路径
+
+	/*QFileInfo pyScriptFileInfo(pythonScriptPath);
 	QDir pyScriptDir(pyScriptFileInfo.absolutePath());
 	std::stringstream ss;
 	ss << pythonExePath.toStdString();
@@ -164,7 +165,7 @@ void MainWindow::dailogAddTask(QPair<QString, QString> msg)
 	ss << pyScriptDir.absolutePath().toStdString();
 	ss << "/count_num.py";
 	ss << " -config ";
-	auto pythonStaticScriptPath = QString::fromStdString(ss.str());
+	auto pythonStaticScriptPath = QString::fromStdString(ss.str());*/
 
 	QDir dir;
 	if (!dir.exists(savedSeedPath)) { dir.mkpath(savedSeedPath); }
@@ -201,6 +202,7 @@ void MainWindow::dailogAddTask(QPair<QString, QString> msg)
 	ti->isUploadServer = isUploadServer;
 	ti->pythonExePath = pythonExePath;
 	ti->pythonScriptPath = pythonScriptPath;
+	ti->pythonCountScriptPath = pythonCountScriptPath;
 	ti->extractHeight = extractHeight;
 	ti->extractWidth = extractWidth;
 	ti->extractX = extractX;
@@ -210,7 +212,7 @@ void MainWindow::dailogAddTask(QPair<QString, QString> msg)
 	ti->labelHeight = labelHeight;
 	ti->blockNum = block_num;
 	ti->extractCheckCount = 0;
-	ti->pythonStatisticsPath = pythonStaticScriptPath;
+	//ti->pythonStatisticsPath = pythonStaticScriptPath;
 	ti->dingNoticePhones = m_dingNoticePhones;
 
 	m_taskMap.insert(msg.first + "_" + timestamp, ti);
@@ -292,7 +294,7 @@ void MainWindow::taskFininshed()
 }
 
 void MainWindow::updateLabelCount(QString taskName, int count) {
-	m_taskMap[taskName]->extractCheckCount = count;
+	m_taskMap[taskName]->extractCheckCount += count;
 }
 
 // 并发执行任务
@@ -305,6 +307,7 @@ bool MainWindow::multiRunTask(std::shared_ptr<TaskInfo>& task_info)
 		getExtractImageName(files, extractPath, task_info->taskName, m_cpuCount);
 		// 2. 根据核数将任务拆分
 		// 3. 多线程处理 调用QProcess来执行脚本
+		bool is_statistics{ true };
 		for (auto& img_file : files) {
 			if (img_file.isEmpty()) { continue; }
 
@@ -313,7 +316,7 @@ bool MainWindow::multiRunTask(std::shared_ptr<TaskInfo>& task_info)
 			info["extract_path"] = task_info->extractImagePath;
 			info["save_seed_path"] = task_info->savedSeedPath;
 			info["failed_image_path"] = task_info->failedImagePath;
-			info["image_names"] = img_file;
+			
 			info["extract_width"] = task_info->extractWidth;
 			info["extract_height"] = task_info->extractHeight;
 			info["extract_x"] = task_info->extractX;
@@ -323,13 +326,29 @@ bool MainWindow::multiRunTask(std::shared_ptr<TaskInfo>& task_info)
 			info["label_height"] = task_info->labelHeight;
 			info["block_number"] = task_info->blockNum;
 
+			if (is_statistics) {
+				// 统计数量
+				std::unique_ptr<QJsonObject> info_count_ptr = std::make_unique<QJsonObject>(info);
+				auto pySender = std::make_unique<PythonGetLabelCountSender>();
+				connect(pySender.get(), &PythonGetLabelCountSender::labelCount, this, &MainWindow::updateLabelCount);
+				ExcutePythonScript* count_task = new ExcutePythonScript(task_info->taskName, task_info->pythonExePath,
+					task_info->pythonCountScriptPath, std::move(info_count_ptr), std::move(pySender));
+				m_threadPool.start(count_task); // 添加任务到线程池
+				is_statistics = false;
+			}
 
+			info["image_names"] = img_file;
+
+			// 识别
 			std::unique_ptr<QJsonObject> info_ptr = std::make_unique<QJsonObject>(info);
-			ExcutePythonScript* task = new ExcutePythonScript(task_info->pythonExePath, task_info->pythonScriptPath, std::move(info_ptr));
+			ExcutePythonScript* task = new ExcutePythonScript(task_info->taskName,task_info->pythonExePath, 
+				task_info->pythonScriptPath, std::move(info_ptr), std::nullopt);
 			m_threadPool.start(task); // 添加任务到线程池
+
+			
 		}
 		// 4. 调用python脚本并获取输出
-		std::stringstream ss;
+		/*std::stringstream ss;
 		ss << task_info->pythonStatisticsPath.toStdString();
 		ss << "\"{\\\"extract_path\\\": \\\"";
 		ss << task_info->extractImagePath.toStdString();
@@ -338,7 +357,9 @@ bool MainWindow::multiRunTask(std::shared_ptr<TaskInfo>& task_info)
 		auto pySender = std::make_unique<PythonGetLabelCountSender>();
 		connect(pySender.get(), &PythonGetLabelCountSender::labelCount, this, &MainWindow::updateLabelCount);
 		auto pyTask = new PythonGetLabelCount(task_info->taskName, py_script, std::move(pySender));
-		m_threadPool.start(pyTask);
+		m_threadPool.start(pyTask);*/
+
+
 		// 4. 等待所有任务完成，更新状态，以及完成文件夹名修改
 		m_threadPool.waitForDone(); // 等待所有任务完成
 
@@ -490,8 +511,11 @@ void MainWindow::startRunTask()
 }
 
 
-ExcutePythonScript::ExcutePythonScript(QString& pythonExe, QString& pythonScript, std::unique_ptr<QJsonObject> info)
-	:m_exe(pythonExe), m_script(pythonScript), m_info(std::move(info))
+ExcutePythonScript::ExcutePythonScript(QString& taskName, QString& pythonExe, QString& pythonScript, 
+	std::unique_ptr<QJsonObject> info,
+	std::optional<std::unique_ptr<PythonGetLabelCountSender>> sender)
+	:m_taskName(taskName), m_exe(pythonExe), m_script(pythonScript), 
+	m_info(std::move(info)), m_sender(std::move(sender))
 {
 
 }
@@ -512,6 +536,28 @@ void ExcutePythonScript::run()
 	// 处理 Python 脚本返回的结果
 	QByteArray output = process.readAllStandardOutput();
 	QString outputString = QString::fromUtf8(output);
+
+
+	if (m_sender != std::nullopt) {
+		int count{ 0 };
+		try {
+			QRegularExpression regex(R"(count_all:\s+(\d+))");
+			QRegularExpressionMatch match = regex.match(outputString);
+			if (match.hasMatch()) {
+				if (auto countAllValue = match.captured(1); !countAllValue.isEmpty()) {
+					count = countAllValue.toInt();
+				}
+			}
+		}
+		catch (...) {
+			count = 0;
+		}
+		if (m_sender.has_value()) {
+			if (m_sender.value()) {
+				m_sender.value()->sendLabelCount(m_taskName, count);
+			}
+		}
+	}
 }
 
 void MainWindow::on_action_help_triggered()

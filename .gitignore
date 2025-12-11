@@ -5,3 +5,7 @@
 debug
 release
 .qmake.stash
+out
+cmake-build-debug
+cmake-build-release
+build

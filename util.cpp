@@ -1,6 +1,5 @@
 #include "util.h"
 #include <QDir>
-#include <iostream>
 #include <string>
 #include <cstdio>
 #include <QRegularExpression>
@@ -114,7 +113,6 @@ void getExtractImageName(QStringList& files, fs::path& extractPath, QString& tas
 			files.append(QString::fromStdString(customeCsv.string()));
 			file_count++;
 		}
-
 	}
 
 	int index = 0;

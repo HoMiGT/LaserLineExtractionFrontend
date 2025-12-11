@@ -1,16 +1,9 @@
 #include "mainwindow.h"
 
 #include <QApplication>
-#include <iostream>
-#include <fstream>
-#include <filesystem>
 #include <QMessageBox>
-#include <algorithm>
-#include <string>
 #include "util.h"
 #include <QJsonObject>
-
-namespace fs = std::filesystem;
 
 int main(int argc, char *argv[])
 {

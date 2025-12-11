@@ -67,6 +67,7 @@ struct TaskInfo {
 	bool isUploadServer;  // 是否上传入服务
 	QString pythonExePath;  // python 执行路径
 	QString pythonScriptPath; // python 脚本路径
+	QString pythonCountScriptPath; // 统计数量脚本路径
 	QTime startTime; // 任务开始时间
 	QTime endTime; // 任务结束时间
 	double extractHeight; // 提取高
@@ -77,7 +78,7 @@ struct TaskInfo {
 	double labelWidth;  // 二维码宽
 	double labelHeight;  // 二维码高
 	int blockNum;  // 粉块数量
-	QString pythonStatisticsPath; // python统计路径
+	//QString pythonStatisticsPath; // python统计路径
 	int extractCheckCount;  // 提取的检测数量
 	QString dingNoticePhones;  // 钉钉通知人
 };

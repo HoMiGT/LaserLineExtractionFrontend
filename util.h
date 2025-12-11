@@ -7,7 +7,6 @@
 #include <QFile>
 #include <QJsonValue>
 #include <optional>
-#include <fstream>
 
 namespace fs = std::filesystem;
 

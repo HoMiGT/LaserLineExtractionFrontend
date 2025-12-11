@@ -5,7 +5,6 @@
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
 #include <QIntValidator>
-#include <fstream>
 #include <QMessageBox>
 #include <QString>
 #include <QAbstractItemView>
@@ -109,6 +108,7 @@ void SettingWindow::on_pushButton_clear_clicked()
 			this->m_ui->checkBox_dingTalk->setChecked(false);
 			this->m_ui->lineEdit_pythonPath->clear();
 			this->m_ui->lineEdit_pythonScript->clear();
+			this->m_ui->lineEdit_pythonCountScript->clear();
 			this->m_ui->lineEdit_parallelCount->clear();
 		}
 	}
@@ -162,6 +162,7 @@ void SettingWindow::on_listView_settings_doubleClicked(const QModelIndex& index)
 		this->m_ui->checkBox_dingTalk->setChecked(json.value("is_ding_notice").toBool()); // 是否通知钉钉
 		this->m_ui->lineEdit_pythonPath->setText(json.value("python_exe_path").toString()); // python执行路径
 		this->m_ui->lineEdit_pythonScript->setText(json.value("python_script_path").toString()); // python 执行脚本的路径
+		this->m_ui->lineEdit_pythonCountScript->setText(json.value("python_count_script_path").toString()); // python 并行脚本路径
 		this->m_ui->lineEdit_parallelCount->setText(QString::number(json.value("parallel_count").toInt()));  // 任务并行数
 		this->m_ui->lineEdit_dingTalkPhones->setText(json.value("ding_notice_phones").toString()); // 钉钉提醒人
 	}
@@ -286,6 +287,7 @@ void SettingWindow::on_pushButton_ok_clicked()
 			bool is_ding_notice = this->m_ui->checkBox_dingTalk->isChecked();
 			QString python_exe_path = this->m_ui->lineEdit_pythonPath->text();
 			QString python_script_path = this->m_ui->lineEdit_pythonScript->text();
+			QString python_count_script_path = this->m_ui->lineEdit_pythonCountScript->text();
 			int parallel_count = this->m_ui->lineEdit_parallelCount->text().toInt();
 			QString ding_notice_phones = this->m_ui->lineEdit_dingTalkPhones->text();
 
@@ -298,6 +300,7 @@ void SettingWindow::on_pushButton_ok_clicked()
 			jsonObj["is_ding_notice"] = is_ding_notice; // 是否通知钉钉
 			jsonObj["python_exe_path"] = python_exe_path; // python执行路径
 			jsonObj["python_script_path"] = python_script_path; // python 脚本的执行路径
+			jsonObj["python_count_script_path"] = python_count_script_path;  // python 个数脚本的执行路径
 			jsonObj["parallel_count"] = parallel_count; // 并行数据
 			jsonObj["ding_notice_phones"] = ding_notice_phones; // 钉钉提醒人
 
@@ -395,7 +398,7 @@ void SettingWindow::deleteItem()
 
 void SettingWindow::on_pushButton_pythonScript_clicked()
 {
-	QString path = QFileDialog::getOpenFileName(this, "选择文件", "./", tr("Python files(*.py)"));
+	const QString path = QFileDialog::getOpenFileName(this, "选择文件", "./", tr("Python files(*.py)"));
 	if (path.isEmpty()) { return; }
 	this->m_ui->lineEdit_pythonScript->setText(path);
 }
@@ -403,8 +406,16 @@ void SettingWindow::on_pushButton_pythonScript_clicked()
 
 void SettingWindow::on_pushButton_extractFile_clicked()
 {
-	QString path = QFileDialog::getExistingDirectory(this, "选择文件夹", "./", QFileDialog::ShowDirsOnly);
+	const QString path = QFileDialog::getExistingDirectory(this, "选择文件夹", "./", QFileDialog::ShowDirsOnly);
 	if (path.isEmpty()) { return; }
 	this->m_ui->lineEdit_extractFile->setText(path);
+}
+
+
+void SettingWindow::on_pushButton_pythonCountScript_clicked()
+{
+	const QString path = QFileDialog::getOpenFileName(this, "选择文件", "./", tr("Python files(*.py)"));
+	if (path.isEmpty()) { return; }
+	this->m_ui->lineEdit_pythonCountScript->setText(path);
 }
 

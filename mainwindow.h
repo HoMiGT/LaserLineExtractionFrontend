@@ -99,24 +99,6 @@ private:
 
 };
 
-
-class ExcutePythonScript :public QRunnable {
-
-public:
-	ExcutePythonScript(QString& m_exe, QString& m_scipt, std::unique_ptr<QJsonObject> info);
-
-	~ExcutePythonScript() = default;
-
-	void run() override;
-
-private:
-	QString m_exe;
-	QString m_script;
-	std::unique_ptr<QJsonObject> m_info;
-
-};
-
-
 class PythonGetLabelCountSender : public QObject {
 	Q_OBJECT
 
@@ -127,6 +109,27 @@ public:
 	void sendLabelCount(QString taskName, int count);
 
 };
+
+
+class ExcutePythonScript :public QRunnable {
+
+public:
+	ExcutePythonScript(QString& name, QString& exe, QString& scipt, 
+		std::unique_ptr<QJsonObject> info,
+		std::optional<std::unique_ptr<PythonGetLabelCountSender>> sender);
+
+	~ExcutePythonScript() = default;
+
+	void run() override;
+
+private:
+	QString m_taskName;
+	QString m_exe;
+	QString m_script;
+	std::unique_ptr<QJsonObject> m_info;
+	std::optional<std::unique_ptr<PythonGetLabelCountSender>> m_sender;
+};
+
 
 class PythonGetLabelCount : public QRunnable {
 public:
